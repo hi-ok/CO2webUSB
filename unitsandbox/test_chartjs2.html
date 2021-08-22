@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <title>Cover Template · Bootstrap v5.0</title>
+    <!-- <link rel="canonical" href="https://hagurachaya.com/co2/"> -->
+
+    <!-- inc -->
+    <!-- <link href="./bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./bootstrap-icons-1.4.0/bootstrap-icons.css">
+    <script src="./js/jquery-3.5.1.min.js"></script> -->
+
+    <!-- CDN -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+    <!-- <script src="https://cdnjs.com/libraries/Chart.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" rel="stylesheet">
+
+    <script src="./js/chartctrl.js"></script>
+
+    <!-- <script src="./js/co2.js"></script> -->
+    <style>
+    </style>
+    <link href="./css/cover.css" rel="stylesheet">
+  </head>
+  <!-- <body class="d-flex h-100 text-center text-white bg-dark"> -->
+  <body>
+
+<!-- <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">二酸化炭素センサー</h3>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link active" aria-current="page" href="#">測定</a>
+        <a class="nav-link" href="#">ネットワーク管理者様へ</a>
+        <a class="nav-link" href="#">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-1 ">
+    <p id="debugnote" class="lead">
+
+
+    </p>
+  </main>
+
+</div> -->
+<!-- <canvas id="myChart" width="400" height="400" style="border:solid 1px #ff0000;"></canvas> -->
+<div id="chartjs" style="width:100%;">
+  <canvas id="canvas"></canvas>
+</div>
+<button id="randomizeData">Randomize Data</button>
+<button id="removeData">removeData</button>
+<div id = "debugnote"></div>
+<script>
+
+
+
+
+  window.onload = function() {
+    try {
+      // CHARTJS._ary_co2data = Array(0);
+      // CHARTJS._ary_co2data = new Array();
+      // CHARTJS._ary_co2data = [];
+      // // CHARTJS._ary_co2data[0] = 0;
+      // document.getElementById('debugnote').innerHTML = CHARTJS._ary_co2data.length;
+
+      var ctx = document.getElementById('canvas').getContext('2d');
+      CHARTJS.drowChart(ctx);
+
+      // CHARTJS._myLine.render({
+      //     duration: 800,
+      //     lazy: false,
+      //     easing: 'easeOutBounce'
+      // });
+
+      // myLineChart.destroy();
+      // CHARTJS._myLine.update();
+    } catch (error) {
+      // alert("catch error: " + error + '\n');
+      return false;
+    }
+  };
+
+  document.getElementById('randomizeData').addEventListener('click', function() {
+    CHARTJS._ary_labels.push('cows');
+    CHARTJS._ary_co2data.push(rand(0, 3000));
+    CHARTJS._ary_humdata.push(rand(15, 35));
+    CHARTJS._ary_tmpdata.push(rand(10, 80));
+
+    if (CHARTJS._ary_labels.length > 15) {
+      CHARTJS._ary_labels.shift();
+      CHARTJS._ary_co2data.shift();
+      CHARTJS._ary_humdata.shift();
+      CHARTJS._ary_tmpdata.shift();
+    }
+
+
+    CHARTJS._myLine.update({
+        duration: 800,
+        easing: 'easeOutBounce'
+    })
+
+    document.getElementById('debugnote').innerHTML = CHARTJS._ary_co2data.join("-");
+
+  });
+
+  document.getElementById('removeData').addEventListener('click', function() {
+    removeData();
+  });
+
+  function rand(min,max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  function removeData() {
+    document.getElementById('debugnote').innerHTML = "removeData";
+      CHARTJS._myLine.data.labels.pop();
+      CHARTJS._myLine.data.datasets.forEach((dataset) => {
+          dataset.data.pop();
+      });
+
+      CHARTJS._myLine.update();
+  }
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <meta name="robots" content="noindex"> -->
+    <title>二酸化炭素測定</title>
+    <link rel="canonical" href="https://kuippa.com/co2/">
+
+    <!-- inc -->
+    <!-- <link href="./bootstrap-5.0.0-beta1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./bootstrap-icons-1.4.0/bootstrap-icons.css">
+    <script src="./js/jquery-3.5.1.min.js"></script> -->
+
+    <!-- CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" rel="stylesheet">
+
+    <script src="./js/chartctrl.js"></script>
+    <script src="./js/co2.js"></script>
+    <script src="./js/viewctrl.js"></script>
+    <script src="./js/datactrl.js"></script>
+    <style>
+
+    </style>
+    <link href="./css/cover.css" rel="stylesheet">
+  </head>
+  <body class="d-flex h-100 text-center text-white bg-dark">
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">二酸化炭素センサー</h3>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link active" aria-current="page" href="#">測定</a>
+        <a class="nav-link" href="readme.html">システム管理者様へ</a>
+        <a class="nav-link" href="aboutco2.html">二酸化炭素について</a>
+        <a class="nav-link" href="aboutvirus.html">ウイルスと換気について</a>
+        <a class="nav-link" href="https://hagurachaya.com/ask.php">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-3 ">
+    <h1>二酸化炭素の測定</h1>
+    <p id="debugnote" class="lead">このページは紅茶屋さんが、夜なべして作った二酸化炭素センサー用のページです。
+      ブラウザのバージョンアップ等により予告なくサービスを終了することがあります。
+    </p>
+
+    <div id="checklistbox" class="my-3 p-3 bg-dark rounded shadow-sm text-start"  style="border:solid 5px #ff0000;">
+      <h6 class="border-bottom pb-2 mb-0">動作環境の確認</h6>
+
+      <div class="text-white d-flex pt-3">
+        <div class="p-2">
+          <i id="chk_1" class="bi bi-square fs-1 me-2 float-start" ></i>
+        </div>
+        <div class="p-2 border-bottom w-100">
+          <strong class="d-block text-gray-dark">ブラウザ</strong> Google Chromeのバージョン80以上が必要です
+          <div id="chk_1_note" class="p-2 bg-danger d-none">
+            あなたのブラウザは<div id="BrowseVer"></div>です。
+
+            <a href="https://www.google.com/chrome/" target="_blank"><img src="./img/chrome-logo.svg">
+            最新版のGoogle Chrome ver80以上をダウンロードしてください</a> iPhone用のChromeは現在、動作対象外です。
+          </div>
+          <div class="pt-3">
+            <i id="chk_1_1" class="bi bi-square me-2 float-start" ></i>ブラウザのタイプ<br>
+            <i id="chk_1_2" class="bi bi-square me-2 float-start" ></i>ブラウザのバージョン<br>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="text-white d-flex pt-3">
+        <div class="p-2">
+          <i id="chk_2" class="bi bi-square fs-1 me-2 float-start" ></i>
+        </div>
+        <div class="p-2 border-bottom w-100">
+          <strong class="d-block text-gray-dark">ネット環境</strong> HTTPS接続、Web Serial APIの動作設定が必要です
+          <div id="chk_2_1_note" class="p-2 bg-danger d-none">
+            SSL接続が必要です.
+            <a id="ssl_url" href="#" target="_blank">HTTPSアドレス</a>にアクセスしなおしてください
+          </div>
+          <div id="chk_2_2_note" class="p-2 bg-danger d-none">
+            ブラウザの新しいタブを開いてURLバーに <b>chrome://flags/</b>を入力してアクセスしてください。
+            <b>#enable-experimental-web-platform-features</b>のフラグを検索して、DisabledをEnabledに変更しRelaunchボタンを押してください。
+            <img src="./img/chrom_flag_enabled.png" width="100%">
+          </div>
+          <div class="pt-3">
+            <i id="chk_2_1" class="bi bi-square me-2 float-start" ></i>HTTPS接続<br>
+            <i id="chk_2_2" class="bi bi-square me-2 float-start" ></i>Web Serial API<br>
+          </div>
+
+        </div>
+      </div>
+
+
+      <small class="d-block text-end mt-3">
+        <a href="readme.html">動作環境についての詳細説明</a>
+      </small>
+    </div>
+
+
+    <div id="chartbox" class="d-none" style="width:100%;background-color: #ffffff;border:solid 2px #00ff00;">
+      <canvas id="canvas"></canvas>
+      <div class="d-none">
+        <form id="frmcsv" action="datacsvdl.php" method="post">
+        <textarea id="timedata" name="timedata" rows="5" cols="20"></textarea>
+        <textarea id="co2data" name="co2data" rows="5" cols="10"></textarea>
+        <textarea id="humdata" name="humdata" rows="5" cols="10"></textarea>
+        <textarea id="tmpdata" name="tmpdata" rows="5" cols="10"></textarea><br>
+        <input name="botblocker" type="hidden" value="にばいと文字圏自然バリア" >
+        <!-- <input type="submit" value="CSVデータとしてダウンロードする" > -->
+        </form>
+      </div>
+      <input type="button" id="btnCSV" class="btn btn-sm btn-secondary fw-bold border-black bg-white" value="CSV ダウンロード">
+    </div>
+
+    <p class="lead ">
+    </p>
+    <p id="txtStartNote" class="lead">ポケット二酸化炭素センサーを接続してください</p>
+    <p class="lead justify-content-center">
+
+      <input type="button" id="btnStart" class="btn btn-lg btn-secondary fw-bold border-white bg-gray" value="測定開始"  disabled>
+      <input type="button" id="btnStop" class="btn btn-lg btn-secondary fw-bold border-white bg-gray d-none" value="測定停止"  disabled>
+    </p>
+  </main>
+
+
+
+  <footer class="mt-auto text-white-50">
+    <p>もし何か質問があればお気軽に<a href="https://twitter.com/kuippa" class="text-white">@kuippa</a>.</p>
+  </footer>
+</div>
+
+
+
+
+<script>
+
+
+  // $(document).ready(function() {
+  $(window).on('load',function() {
+    $("#btnStart").on('click',serialPortOpen);
+    $("#btnStop").on('click',serialPortClose);
+    $("#btnCSV").on('click',dlStart);
+    _all_path = getUserAgentInfo();
+    $("#BrowseVer").html(navigator.userAgent);
+    _timer_id = setInterval(timerCheckUp, TIMER_TMP);
+    var ctx = document.getElementById('canvas').getContext('2d');
+    CHARTJS.drowChart(ctx);
+  });
+
+  function dlStart() {
+    $("#timedata").val(CHARTJS._ary_timedata.join("\r\n"));
+    $("#co2data").val(CHARTJS._ary_co2data.join("\r\n"));
+    $("#humdata").val(CHARTJS._ary_humdata.join("\r\n"));
+    $("#tmpdata").val(CHARTJS._ary_tmpdata.join("\r\n"));
+    $('#frmcsv').submit();
+  }
+
+</script>
+
+  </body>
+</html>

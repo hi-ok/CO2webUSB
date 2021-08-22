@@ -1,0 +1,282 @@
+web USB
+
+https://developer.mozilla.org/en-US/docs/Web/API/USB
+
+USB.onconnect
+An event handler called whenever a previously paired device is connected.
+USB.ondisconnect
+An event handler called whenever a paired device is disconnected.
+Methods
+USB.getDevices()
+Returns a Promise that resolves with an array of USBDevice objects for paired attached devices.
+USB.requestDevice()
+
+
+
+
+
+WebUSBことはじめ
+https://qiita.com/Aruneko/items/aebb75feca5bed12fe32
+
+
+// デバイスの接続要求
+// ポップアップが出るので接続するデバイスを選択すること
+const device = await navigator.usb.requestDevice(
+  {
+    'filters': [
+      {'vendorId': vendor_id, 'product_id': product_id}
+    ]
+  }
+)
+// Configurationsの表示
+device.configurations
+
+
+// いずれもPromiseが返るので、awaitします
+await device.open()
+await device.selectConfiguration(1)
+await device.claimInterface(0)
+
+
+
+
+https://teratail.com/questions/162037
+
+navigator.mediaDevices.enumerateDevices().then(
+  devices => devices.filter(e => e.kind == 'videoinput').forEach(
+    e => console.log(
+      'deviceId == ' + e.deviceId + '\n' +
+      'groupId == ' + e.groupId + '\n' +
+      'label == ' + e.label + '\n\n'
+    )
+  )
+).catch(
+  error => console.log('Failed', error)
+
+);
+
+
+
+
+------------------------------------------------------------------
+
+[Port7]  :  USB シリアル デバイス
+
+
+Is Port User Connectable:         yes
+Is Port Debug Capable:            no
+Companion Port Number:            3
+Companion Hub Symbolic Link Name: USB#ROOT_HUB30#5&4087d53&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8}
+Protocols Supported:
+ USB 1.1:                         yes
+ USB 2.0:                         yes
+ USB 3.0:                         no
+
+Device Power State:               PowerDeviceD0
+
+       ---===>Device Information<===---
+English product name: "CDC RS-232 Emulation Demo"
+
+ConnectionStatus:                  
+Current Config Value:              0x01  -> Device Bus Speed: Full (is not SuperSpeed or higher capable)
+Device Address:                    0x05
+Open Pipes:                           3
+
+          ===>Device Descriptor<===
+bLength:                           0x12
+bDescriptorType:                   0x01
+bcdUSB:                          0x0200
+bDeviceClass:                      0x02  -> This is a Communication Device
+bDeviceSubClass:                   0x00
+bDeviceProtocol:                   0x00
+bMaxPacketSize0:                   0x08 = (8) Bytes
+idVendor:                        0x04D8 = Microchip Technology Inc.
+idProduct:                       0x000A
+bcdDevice:                       0x0100
+iManufacturer:                     0x01
+     English (United States)  "Microchip Technology Inc."
+iProduct:                          0x02
+     English (United States)  "CDC RS-232 Emulation Demo"
+iSerialNumber:                     0x00
+bNumConfigurations:                0x01
+
+          ---===>Open Pipes<===---
+
+          ===>Endpoint Descriptor<===
+bLength:                           0x07
+bDescriptorType:                   0x05
+bEndpointAddress:                  0x81  -> Direction: IN - EndpointID: 1
+bmAttributes:                      0x03  -> Interrupt Transfer Type
+wMaxPacketSize:                  0x000A = 0x0A bytes
+bInterval:                         0x02
+
+          ===>Endpoint Descriptor<===
+bLength:                           0x07
+bDescriptorType:                   0x05
+bEndpointAddress:                  0x02  -> Direction: OUT - EndpointID: 2
+bmAttributes:                      0x02  -> Bulk Transfer Type
+wMaxPacketSize:                  0x0040 = 0x40 bytes
+bInterval:                         0x00
+
+          ===>Endpoint Descriptor<===
+bLength:                           0x07
+bDescriptorType:                   0x05
+bEndpointAddress:                  0x82  -> Direction: IN - EndpointID: 2
+bmAttributes:                      0x02  -> Bulk Transfer Type
+wMaxPacketSize:                  0x0040 = 0x40 bytes
+bInterval:                         0x00
+
+       ---===>Full Configuration Descriptor<===---
+
+          ===>Configuration Descriptor<===
+bLength:                           0x09
+bDescriptorType:                   0x02
+wTotalLength:                    0x0043  -> Validated
+bNumInterfaces:                    0x02
+bConfigurationValue:               0x01
+iConfiguration:                    0x00
+bmAttributes:                      0xC0  -> Self Powered
+MaxPower:                          0x32 = 100 mA
+
+          ===>Interface Descriptor<===
+bLength:                           0x09
+bDescriptorType:                   0x04
+bInterfaceNumber:                  0x00
+bAlternateSetting:                 0x00
+bNumEndpoints:                     0x01
+bInterfaceClass:                   0x02  -> This is Communications (CDC Control) USB Device Interface Class
+bInterfaceSubClass:                0x02
+bInterfaceProtocol:                0x01
+iInterface:                        0x00
+  -> This is a Communications (CDC Control) USB Device Interface Class
+
+          ===>Descriptor Hex Dump<===
+bLength:                           0x05
+bDescriptorType:                   0x24
+05 24 00 10 01 
+  -> This is a Communications (CDC Control) USB Device Interface Class
+
+          ===>Descriptor Hex Dump<===
+bLength:                           0x04
+bDescriptorType:                   0x24
+04 24 02 02 
+  -> This is a Communications (CDC Control) USB Device Interface Class
+
+          ===>Descriptor Hex Dump<===
+bLength:                           0x05
+bDescriptorType:                   0x24
+05 24 06 00 01 
+  -> This is a Communications (CDC Control) USB Device Interface Class
+
+          ===>Descriptor Hex Dump<===
+bLength:                           0x05
+bDescriptorType:                   0x24
+05 24 01 00 01 
+
+          ===>Endpoint Descriptor<===
+bLength:                           0x07
+bDescriptorType:                   0x05
+bEndpointAddress:                  0x81  -> Direction: IN - EndpointID: 1
+bmAttributes:                      0x03  -> Interrupt Transfer Type
+wMaxPacketSize:                  0x000A = 0x0A bytes
+bInterval:                         0x02
+
+          ===>Interface Descriptor<===
+bLength:                           0x09
+bDescriptorType:                   0x04
+bInterfaceNumber:                  0x01
+bAlternateSetting:                 0x00
+bNumEndpoints:                     0x02
+bInterfaceClass:                   0x0A  -> This is a CDC Data USB Device Interface Class
+bInterfaceSubClass:                0x00
+bInterfaceProtocol:                0x00
+iInterface:                        0x00
+
+          ===>Endpoint Descriptor<===
+bLength:                           0x07
+bDescriptorType:                   0x05
+bEndpointAddress:                  0x02  -> Direction: OUT - EndpointID: 2
+bmAttributes:                      0x02  -> Bulk Transfer Type
+wMaxPacketSize:                  0x0040 = 0x40 bytes
+bInterval:                         0x00
+
+          ===>Endpoint Descriptor<===
+bLength:                           0x07
+bDescriptorType:                   0x05
+bEndpointAddress:                  0x82  -> Direction: IN - EndpointID: 2
+bmAttributes:                      0x02  -> Bulk Transfer Type
+wMaxPacketSize:                  0x0040 = 0x40 bytes
+bInterval:                         0x00
+
+
+
+
+ELAN Microelectronics Corportation
+
+const device2 = await navigator.usb.requestDevice(
+  {
+    'filters': [
+      {'vendorId': 0x04D8}
+    ]
+  }
+)
+device2.configurations
+
+[USBConfiguration]
+0: USBConfiguration
+configurationName: null
+configurationValue: 1
+interfaces: Array(2)
+0: USBInterface
+alternate: null
+alternates: Array(1)
+0: USBAlternateInterface
+alternateSetting: 0
+endpoints: Array(1)
+0: USBEndpoint
+direction: "in"
+endpointNumber: 1
+packetSize: 10
+type: "interrupt"
+__proto__: USBEndpoint
+length: 1
+__proto__: Array(0)
+interfaceClass: 2
+interfaceName: null
+interfaceProtocol: 1
+interfaceSubclass: 2
+__proto__: USBAlternateInterface
+length: 1
+__proto__: Array(0)
+claimed: false
+interfaceNumber: 0
+__proto__: USBInterface
+1: USBInterface
+alternate: null
+alternates: Array(1)
+0: USBAlternateInterface
+alternateSetting: 0
+endpoints: Array(2)
+0: USBEndpoint {endpointNumber: 2, direction: "out", type: "bulk", packetSize: 64}
+1: USBEndpoint
+direction: "in"
+endpointNumber: 2
+packetSize: 64
+type: "bulk"
+__proto__: USBEndpoint
+length: 2
+__proto__: Array(0)
+interfaceClass: 10
+interfaceName: null
+interfaceProtocol: 0
+interfaceSubclass: 0
+__proto__: USBAlternateInterface
+length: 1
+__proto__: Array(0)
+claimed: false
+interfaceNumber: 1
+__proto__: USBInterface
+length: 2
+__proto__: Array(0)
+__proto__: USBConfiguration
+length: 1
