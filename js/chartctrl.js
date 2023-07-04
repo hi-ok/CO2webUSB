@@ -26,7 +26,7 @@ var _chartColors = {
   purple: 'rgb(153, 102, 255)',
   grey: 'rgb(201, 203, 207)'
 };
-const CHART_TITLE = "グラフ タイトル";
+const CHART_TITLE = "リアルタイム測定値";
 const LABEL1_TITLE = "CO2(左軸)";
 const LABEL2_TITLE = "湿度(右軸)";
 const LABEL3_TITLE = "気温(右軸)";
