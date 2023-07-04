@@ -5,8 +5,9 @@ let _reader;
 let _buffline = "";
 const TIMER_STREAM = 500; // 読み込みのためのタイマーインターバル
 const FILTER = [
-        {usbVendorId: 0x04D8, usbProductId: 0x000A}
-      ];
+  {usbVendorId: 0x04D8, usbProductId: 0x000A}, // ポケット二酸化炭素センサー
+  {usbVendorId: 0x04D8, usbProductId: 0xE95A}, // IO-DATA UD-CO2S
+];
 const BAUDRATE = 9600;
 // const CHART_CNT = 500; // チャートに表示する件数
 const CHART_CNT = 50000; // チャートに表示する件数 2s*
@@ -139,13 +140,22 @@ function setChartData(buffcols) {
       return false;
     }
 
+    const co2 = aryData[STREAM_DATA[0]];
+    const humApi = aryData[STREAM_DATA[1]];
+    const tmpApi = aryData[STREAM_DATA[2]];
+
+    const et0 = 6.1078 * Math.pow(10.0, 7.5 * tmpApi / (tmpApi + 237.3)); //補正前温度の飽和水蒸気圧
+    const tmp = tmpApi - 4.5;                      //温度補正
+    const et1 = 6.1078 * Math.pow(10.0, 7.5 * tmp / (tmp + 237.3)); //補正後温度の飽和水蒸気圧
+    const hum = Math.min(99.9, humApi * et0 / et1); //湿度補正
+    
     // CHARTJS._ary_labels.push(new Date().toISOString());
     // CHARTJS._ary_labels.push(new Date().toLocaleString());
     CHARTJS._ary_labels.push(new Date().toLocaleTimeString());
     CHARTJS._ary_timedata.push(new Date().toLocaleString());
-    CHARTJS._ary_co2data.push(aryData[STREAM_DATA[0]]);
-    CHARTJS._ary_humdata.push(aryData[STREAM_DATA[1]]);
-    CHARTJS._ary_tmpdata.push(aryData[STREAM_DATA[2]]);
+    CHARTJS._ary_co2data.push(co2);
+    CHARTJS._ary_humdata.push(hum);
+    CHARTJS._ary_tmpdata.push(tmp);
     if (CHARTJS._ary_labels.length > CHART_CNT) {
       CHARTJS._ary_labels.shift();
       CHARTJS._ary_timedata.shift();
@@ -155,9 +165,9 @@ function setChartData(buffcols) {
     }
 
     console.log(
-        "co2:" + aryData[STREAM_DATA[0]]
-      + " hum:" + aryData[STREAM_DATA[1]]
-      + " tmp:" + aryData[STREAM_DATA[2]]);
+        "co2:" + co2
+      + " hum:" + hum
+      + " tmp:" + tmp);
       // console.log(aryData);
     return true;
   } catch (error) {
