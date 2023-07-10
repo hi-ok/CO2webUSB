@@ -140,9 +140,9 @@ function setChartData(buffcols) {
       return false;
     }
 
-    const co2 = aryData[STREAM_DATA[0]];
-    const humApi = aryData[STREAM_DATA[1]];
-    const tmpApi = aryData[STREAM_DATA[2]];
+    const co2 = parseInt(aryData[STREAM_DATA[0]]);
+    const humApi = parseFloat(aryData[STREAM_DATA[1]]);
+    const tmpApi = parseFloat(aryData[STREAM_DATA[2]]);
 
     const et0 = 6.1078 * Math.pow(10.0, 7.5 * tmpApi / (tmpApi + 237.3)); //補正前温度の飽和水蒸気圧
     const tmp = tmpApi - 4.5;                      //温度補正
